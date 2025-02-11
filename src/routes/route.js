@@ -1,6 +1,7 @@
 const express = require('express');
 const usuarioController = require('../controller/usuarioController');
 const imagemController = require('../controller/imagemController');
+const AWSController = require('../controller/AWSController');
 const router = express.Router();
 
 // Rotas de usuários
@@ -35,6 +36,14 @@ router.put('/imagens/atualizar/:id', async (req, res) => {
 
 router.delete('/imagens/deletar/:id', async (req, res) => {
   imagemController.deletarImagem(req, res);
+});
+
+router.get('/imagens/aws/ler', async (req, res) => {
+  AWSController.awsListarImagens(req, res);
+});
+
+router.get('/usuarios/aws/ler', async (req, res) => {
+  AWSController.awsListarUsuarios(req, res);
 });
 
 module.exports = router;
