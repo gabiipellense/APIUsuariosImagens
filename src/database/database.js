@@ -27,6 +27,8 @@ function criarTabelas() {
     const tabelaImagem = `
       CREATE TABLE IF NOT EXISTS imagem (
         id INT AUTO_INCREMENT PRIMARY KEY,
+        id_usuario INT,
+        FOREIGN KEY (id_usuario) REFERENCES usuario (id),
         titulo VARCHAR(100) NOT NULL,
         referencia VARCHAR(255),
         data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP

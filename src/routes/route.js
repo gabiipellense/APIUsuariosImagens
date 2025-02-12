@@ -46,4 +46,11 @@ router.get('/usuarios/aws/ler', async (req, res) => {
   AWSController.awsListarUsuarios(req, res);
 });
 
+router.post('/aws/upload', AWSController.awsUploadFile);
+
+router.post('/aws/download', AWSController.awsDownloadFile);
+
+router.get('/imagens/aws', AWSController.obterImagem);
+
+
 module.exports = router;
