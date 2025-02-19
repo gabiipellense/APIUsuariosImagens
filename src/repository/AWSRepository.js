@@ -1,24 +1,27 @@
 const AWS = require('aws-sdk');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 
-// Configuração das credenciais AWS
+// Configuração das credenciais AWS usando variáveis de ambiente
 AWS.config.update({
-  region: 'us-east-1', 
+  region: 'us-east-1',
   accessKeyId: '',
   secretAccessKey: ''
 });
 
-// Criação da instância do S3
+// Instância do S3
 const s3 = new AWS.S3();
 
 // Função para fazer o upload de um arquivo para o S3
-const uploadFile = (filePath, bucketName, keyName, usuario_id) => {
-  const fileContent = fs.readFileSync(filePath);
+const uploadFile = (filePath, bucketName, usuario_id) => {
+  const fileContent = fs.readFileSync(filePath); // Lê o arquivo corretamente
+  const key = uuidv4(); // Gera um UUID para nome do arquivo
 
   const params = {
     Bucket: bucketName,
-    Key: keyName,
-    Body: fileContent
+    Key: key,
+    Body: fileContent // Agora Body está correto!
   };
 
   return new Promise((resolve, reject) => {
@@ -27,10 +30,9 @@ const uploadFile = (filePath, bucketName, keyName, usuario_id) => {
         return reject(err);
       }
 
-      // Aqui você pode associar o usuário à imagem no banco de dados (se necessário)
-      resolve({ 
-        fileUrl: data.Location, 
-        usuario_id 
+      resolve({
+        fileUrl: data.Location,
+        usuario_id
       });
     });
   });
